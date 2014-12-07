@@ -21,7 +21,7 @@ public abstract class Listener implements ActionListener
 	private static Listener newGame;
 	private static Listener saveGame;
 	private static Listener loadGame;
-//	private Listener GOMOKU_BUTTON;
+//	private static Listener gomokuButton;
 	private static GameData data;
 	
 	public abstract void actionPerformed(ActionEvent event);
@@ -158,10 +158,10 @@ public abstract class Listener implements ActionListener
 		return loadGame;
 	}
 
-/*	public GameData getData() {
-		return data;
-	}
-*/
+//	public GameData getData() {
+//		return data;
+//	}
+
 	/**************************************
 	 * Mengeset listener save game.
 	 * 
@@ -180,9 +180,8 @@ public abstract class Listener implements ActionListener
 		loadGame = loadGame;
 	}
 
-/*	public void setData(GameData data) {
-		this.data = data;
-	}
-*/	
+//	public void setData(GameData data) {
+//		this.data = data;
+//	}
 	
 }

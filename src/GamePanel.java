@@ -14,6 +14,9 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1552746400473185110L;
 
+	/***************
+	 * Constructor.
+	 ***************/
 	public GamePanel() {
 		super(new BorderLayout());
 		add(new BoardGUI(Main.data.getBoard()), BorderLayout.CENTER);
@@ -99,11 +102,22 @@ class BoardGUI extends JPanel {
 	}
 }
 
+/**
+ * Kelas yang digunakan untuk membuat menu
+ * yang berada di bagian bawah permainan.
+ * 
+ * @author Mgs. Muhammad Thoyib Antarnusa
+ * @version 2014.12.07
+ *
+ */
 class GameMenu extends JPanel
 {
 	JPanel features;
 	JButton exitGame;
 	
+	/***************
+	 * Constructor.
+	 ***************/
 	public GameMenu()
 	{
 		super(new BorderLayout());	
@@ -116,6 +130,9 @@ class GameMenu extends JPanel
 		add(exitGame, BorderLayout.EAST);
 	}
 	
+	/*******************************
+	 * Membuat tombol-tombol fitur.
+	 *******************************/
 	private void makeFeatureButtons()
 	{
 		JButton saveGame = new JButton("SAVE GAME");
@@ -127,6 +144,9 @@ class GameMenu extends JPanel
 		features.add(showHistory);
 	}
 	
+	/****************************************
+	 * Membuat tombol keluar dari permainan.
+	 ****************************************/
 	private void makeExitGame()
 	{
 		exitGame = new JButton("EXIT GAME");

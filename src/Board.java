@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class Board implements Serializable
 {
 	private static final long serialVersionUID = -4578591166367315049L;
+	
 	private int baris;
 	private int kolom;
 	
