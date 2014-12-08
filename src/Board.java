@@ -43,7 +43,7 @@ public class Board implements Serializable
 			System.out.printf("%2d: ", i+1);
 			for (int j = 0; j < kolom; j++) {
 				if (arrayPapan[i][j] != null) {
-					System.out.print(arrayPapan[i][j].getNama());
+					System.out.print(arrayPapan[i][j]);
 				} else {
 					System.out.print(".");
 				}
@@ -135,7 +135,7 @@ public class Board implements Serializable
 	 * @param y Koordinat y pada papan.
 	 * @return Isi pada papan di koordinat (x,y).
 	 *********************************************/
-	public Player getPapan(int x, int y)
+	public Player getPlayerAt(int x, int y)
 	{
 		return arrayPapan[x][y];
 	}

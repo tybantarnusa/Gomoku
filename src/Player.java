@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.io.Serializable;
 
 /**
@@ -12,18 +13,20 @@ public class Player implements Serializable
 {
 	private static final long serialVersionUID = 944226352762037188L;
 
-	String lambang;
-	String nama;
+	private String lambang;
+	private String nama;
+	private Color warna;
 
 	/***************************
 	 * Constructor
 	 * 
 	 * @param nama Nama pemain.
 	 ***************************/
-	public Player(String nama)
+	public Player(String nama, Color warna)
 	{
 		this.nama = nama;
 		this.lambang = nama.substring(0,1).toUpperCase();
+		this.warna = warna;
 	}
 	
 	/***********************************************
@@ -58,6 +61,16 @@ public class Player implements Serializable
 		return nama;
 	}
 	
+	/******************************
+	 * Mengembalikan warna pemain.
+	 * 
+	 * @return Nama pemain.
+	 ******************************/
+	public Color getColor()
+	{
+		return warna;
+	}
+	
 	/*****************************************
 	 * Mengeset lambang pemain (berupa char).
 	 * 
@@ -88,6 +101,11 @@ public class Player implements Serializable
 	{
 		this.nama = nama;
 		this.lambang = "" + lambang;
+	}
+	
+	public String toString()
+	{
+		return "" + lambang;
 	}
 	
 }

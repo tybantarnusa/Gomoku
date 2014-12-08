@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
@@ -13,7 +14,7 @@ import javax.swing.JOptionPane;
  * dari tombol-tombol yang ada.
  * 
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 2014.12.07
+ * @version 2014.12.08
  *
  */
 public abstract class Listener implements ActionListener
@@ -21,21 +22,20 @@ public abstract class Listener implements ActionListener
 	private static Listener newGame;
 	private static Listener saveGame;
 	private static Listener loadGame;
-//	private static Listener gomokuButton;
-	private static GameData data;
+	private static Listener goToMainMenu;
 	
 	public abstract void actionPerformed(ActionEvent event);
 	
 	public static void createNewGameListener()
 	{
-		data = new GameData(new Board(19), new Player("Hitam"), new Player("Putih"), 1);
+		Main.data = new GameData(new Board(19), new Player("Hitam", Color.BLACK), new Player("Putih", Color.WHITE), 1);
 		
 		/**
 		 * Kelas yang mengextends Listener sebagai listener
 		 * untuk melakukan permainan baru.
 		 * 
 		 * @author Mgs. Muhammad Thoyib Antarnusa
-		 * @version 2014.12.07
+		 * @version 2014.12.08
 		 * 
 		 */
 		class NewGameListener extends Listener
@@ -60,14 +60,14 @@ public abstract class Listener implements ActionListener
 	 * 
 	 * @param data Data yang akan disave.
 	 *****************************************/
-	public static void createSaveGameListener(GameData data)
+	public static void createSaveGameListener()
 	{
 		/**
 		 * Kelas yang mengextends Listener sebagai listener
 		 * untuk mengesave game.
 		 * 
 		 * @author Mgs. Muhammad Thoyib Antarnusa
-		 * @version 2014.12.06
+		 * @version 2014.12.08
 		 * 
 		 */
 		class SaveGameListener extends Listener
@@ -81,10 +81,11 @@ public abstract class Listener implements ActionListener
 			{
 				try {
 					ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream("memory.sav"));
-					save.writeObject(data);
+					save.writeObject(Main.data);
 					save.close();
+					JOptionPane.showMessageDialog(null, "Berhasil di-save!", "Saving...", JOptionPane.PLAIN_MESSAGE);
 				} catch (IOException IOEx) {
-					JOptionPane.showMessageDialog(null, "Save gagal!");
+					JOptionPane.showMessageDialog(null, "Save gagal!", "Saving...", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			
@@ -103,7 +104,7 @@ public abstract class Listener implements ActionListener
 		 * untuk mengeload game.
 		 * 
 		 * @author Mgs. Muhammad Thoyib Antarnusa
-		 * @version 2014.12.06
+		 * @version 2014.12.08
 		 * 
 		 */
 		class LoadGameListener extends Listener
@@ -115,15 +116,15 @@ public abstract class Listener implements ActionListener
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
-//				System.out.println("DEBUG: Menekan tombol load.");
 				try {
 					ObjectInputStream load = new ObjectInputStream(new FileInputStream("memory.sav"));
-					data = (GameData) load.readObject();
+					Main.data = (GameData) load.readObject();
 					load.close();
+					Main.window.toGamePanel();
 				} catch (IOException IOex) {
-					JOptionPane.showMessageDialog(null, "Load gagal!");
+					JOptionPane.showMessageDialog(null, "Load gagal!", "Loading...", JOptionPane.ERROR_MESSAGE);
 				} catch (ClassNotFoundException CNFex) {
-					JOptionPane.showMessageDialog(null, "Load gagal!");
+					JOptionPane.showMessageDialog(null, "Load gagal!", "Loading...", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -131,6 +132,29 @@ public abstract class Listener implements ActionListener
 		loadGame = new LoadGameListener();
 	}
 	
+	/**
+	 * 
+	 */
+	public static void createMainMenuListener()
+	{
+		/**
+		 * 
+		 * @author Thoyib
+		 * @version 2014.12.08
+		 * 
+		 */
+		class mainMenuListener extends Listener
+		{
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				Main.window.toMainMenu();
+			}
+		}
+		
+		goToMainMenu = new mainMenuListener();
+	}
+		
 	/************************************
 	 * Mengembalikan listener new game.
 	 * 
@@ -156,6 +180,15 @@ public abstract class Listener implements ActionListener
 	 ************************************/
 	public static Listener getLoadGame() {
 		return loadGame;
+	}
+	
+	/****************************************************
+	 * Mengembalikan listener keluar permainan saat ini.
+	 * 
+	 * @return Listener kembali ke menu utama.
+	 ****************************************************/
+	public static Listener getMainMenuListener() {
+		return goToMainMenu;
 	}
 
 //	public GameData getData() {

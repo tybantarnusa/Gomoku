@@ -43,7 +43,7 @@ public class Engine
 			} else {
 				pointer++;
 				
-				if (board.getPapan(x, pointer) == player) {
+				if (board.getPlayerAt(x, pointer) == player) {
 				
 					count++;
 					
@@ -71,7 +71,7 @@ public class Engine
 			} else {
 				pointer--;
 				
-				if (board.getPapan(x, pointer) == player) {
+				if (board.getPlayerAt(x, pointer) == player) {
 				
 					count++;
 					
@@ -123,7 +123,7 @@ public class Engine
 			} else {
 				pointer++;
 				
-				if (board.getPapan(pointer, y) == player) {
+				if (board.getPlayerAt(pointer, y) == player) {
 				
 					count++;
 					
@@ -151,7 +151,7 @@ public class Engine
 			} else {
 				pointer--;
 				
-				if (board.getPapan(pointer, y) == player) {
+				if (board.getPlayerAt(pointer, y) == player) {
 					count++;
 					
 				} else {
@@ -203,7 +203,7 @@ public class Engine
 				pointerX++;
 				pointerY++;
 			
-				if (board.getPapan(pointerX, pointerY) == player) {
+				if (board.getPlayerAt(pointerX, pointerY) == player) {
 				
 					count++;
 					
@@ -232,7 +232,7 @@ public class Engine
 				pointerX--;
 				pointerY--;
 			
-				if (board.getPapan(pointerX, pointerY) == player) {
+				if (board.getPlayerAt(pointerX, pointerY) == player) {
 			
 					count++;
 					
@@ -286,7 +286,7 @@ public class Engine
 				pointerX++;
 				pointerY--;
 			
-				if (board.getPapan(pointerX, pointerY) == player) {
+				if (board.getPlayerAt(pointerX, pointerY) == player) {
 			
 					count++;
 					
@@ -315,7 +315,7 @@ public class Engine
 				pointerX--;
 				pointerY++;
 			
-				if (board.getPapan(pointerX, pointerY) == player) {
+				if (board.getPlayerAt(pointerX, pointerY) == player) {
 			
 					count++;
 					

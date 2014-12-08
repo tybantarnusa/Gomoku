@@ -1,14 +1,23 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 /**
  * Kelas GUI dari permainan gomoku sesungguhnya.
  * 
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 2014.12.07
+ * @version 2014.12.08
  *
  */
 public class GamePanel extends JPanel {
@@ -24,9 +33,16 @@ public class GamePanel extends JPanel {
 	}
 }
 
+/**
+ * 
+ * @author Thoyib
+ * @version 2014.12.08
+ * 
+ */
 class BoardGUI extends JPanel {
 	private static final long serialVersionUID = -844054677852447437L;
 
+	private Board board;
 	private int size;
 	
 	/********************************
@@ -60,14 +76,22 @@ class BoardGUI extends JPanel {
 		{
 			private static final long serialVersionUID = -167434286535250663L;
 
+			protected final int X;
+			protected final int Y;
+			
 			private boolean filled;
+			private Player player;			
 			
 			/***************
 			 * Constructor.
 			 ***************/
-			public Grid()
+			public Grid(int x, int y)
 			{
 				super();
+				
+				this.X = x;
+				this.Y = y;
+				
 				filled = false;
 			}
 			
@@ -84,21 +108,126 @@ class BoardGUI extends JPanel {
 			/*****************
 			 * Mengisi petak.
 			 *****************/
-			public void fill()
+			public void fill(Player player)
 			{
+				this.player = player;
 				filled = true;
+			}
+						
+			/******************************************
+			 * Mengembalikan pemain yang ada di petak.
+			 *
+			 * @return Pemain yang ada di petak.
+			 ******************************************/
+			public Player getPlayer()
+			{
+				return player;
 			}
 		}
 		
-		/********* MEMBUAT PETAK-PETAK PAPAN **********/
+		/**
+		 * 
+		 * @author Thoyib
+		 * @version 2014.12.08
+		 *
+		 */
+		class Stone extends JComponent
+		{
+			private static final long serialVersionUID = 5671889580515372544L;
+
+			private Grid grid;
+			
+			/**
+			 * 
+			 * @param grid
+			 */
+			public Stone(Grid grid)
+			{
+				this.grid = grid;
+			}
+			
+			/**
+			 * 
+			 */
+			public void paintComponent(Graphics g)
+			{
+				Graphics2D g2 = (Graphics2D) g;
+				g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				g2.setPaint(grid.getPlayer().getColor());
+				
+				double DIAMETER = grid.getWidth()/2+4;
+				g2.fill(new Ellipse2D.Double(1.5,0,DIAMETER,DIAMETER));
+			}
+		}
+		
+		/**
+		 * 
+		 * @author Thoyib
+		 * @version 2014.12.08
+		 *
+		 */
+		class GomokuButton implements ActionListener
+		{
+			Grid grid;
+			Player current;
+			
+			/**
+			 * 
+			 * @param grid
+			 */
+			public GomokuButton(Grid grid)
+			{
+				this.grid = grid;
+			}
+			
+			/**
+			 * 
+			 */
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				if (!grid.isFilled()) {
+					grid.fill(Main.data.getCurrentPlayer());
+					grid.add(new Stone(grid));
+					
+					final String KOORDINAT = (grid.X+1) + "," + (grid.Y+1);
+					Main.data.getBoard().putPlayer(Main.data.getCurrentPlayer(), KOORDINAT);
+					Main.data.getBoard().cetak();	// DEBUG
+					
+					// Mengganti pemain tiap turn.
+					if (Main.data.getTurns() % 2 == 0) {
+						Main.data.setCurrentPlayer(Main.data.getPlayer1());
+					} else {
+						Main.data.setCurrentPlayer(Main.data.getPlayer2());
+					}
+					
+					Main.data.setTurns(Main.data.getTurns()+1);
+					
+					grid.revalidate();
+				} else {
+					System.out.println("Kotak sudah terisi.");
+				}
+			}
+			
+		}
+		
+		/********** MEMBUAT PETAK-PETAK PAPAN **********/
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
-				Grid grid = new Grid();
-				grid.addActionListener(null);
+				Grid grid = new Grid(i, j);
+				grid.setBackground(Color.LIGHT_GRAY);
+				grid.setMargin(new Insets(0,0,0,0));
+				grid.addActionListener(new GomokuButton(grid));
+				
+				if (Main.data.getBoard().isFilled((i+1)+","+(j+1)))
+				{
+					grid.fill(Main.data.getBoard().getPlayerAt(i, j));
+					grid.add(new Stone(grid));
+				}
+				
 				add(grid);
 			}
 		}
-		/**********************************************/
+		/************************************************/
 	}
 }
 
@@ -107,11 +236,15 @@ class BoardGUI extends JPanel {
  * yang berada di bagian bawah permainan.
  * 
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 2014.12.07
+ * @version 2014.12.08
  *
  */
 class GameMenu extends JPanel
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6479713536202156821L;
 	JPanel features;
 	JButton exitGame;
 	
@@ -138,6 +271,7 @@ class GameMenu extends JPanel
 		JButton saveGame = new JButton("SAVE GAME");
 		JButton showHistory = new JButton("HISTORY");
 		
+		Listener.createSaveGameListener();
 		saveGame.addActionListener(Listener.getSaveGame());
 		
 		features.add(saveGame);
@@ -150,5 +284,7 @@ class GameMenu extends JPanel
 	private void makeExitGame()
 	{
 		exitGame = new JButton("EXIT GAME");
+		Listener.createMainMenuListener();
+		exitGame.addActionListener(Listener.getMainMenuListener());
 	}
 }
