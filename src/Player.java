@@ -5,7 +5,7 @@ import java.io.Serializable;
  * Kelas berikut digunakan untuk merepresentasikan pemain.
  *
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 2014.12.07
+ * @version 2014.12.08
  *
  */
 

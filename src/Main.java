@@ -4,7 +4,7 @@ import java.awt.Color;
  * Kelas utama dari permainan gomoku.
  * 
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 2014.12.07
+ * @version 2014.12.08
  * 
  */
 public class Main {

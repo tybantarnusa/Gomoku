@@ -3,7 +3,7 @@
  * pada game untuk menentukan kemenangan dan sistem lainnya.
  *
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 1.1.1
+ * @version 2014.12.08
  *
  */
  
