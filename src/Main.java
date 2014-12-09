@@ -11,6 +11,7 @@ public class Main {
 	
 	static Window window = new Window("Gomoku by Thoyib Antarnusa");
 	static GameData data = new GameData(new Board(19), new Player("Hitam", Color.BLACK), new Player("Putih", Color.WHITE), 1);
+	static History h = new History();
 	
 	/******************************
 	 * Method main.
@@ -18,6 +19,7 @@ public class Main {
 	 * @param args Parameter args.
 	 ******************************/
 	public static void main(String[] args) throws Exception {
+		h.setVisible(true);
 		window.setVisible(true);
 	}
 }
