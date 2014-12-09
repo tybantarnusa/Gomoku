@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import javax.swing.JOptionPane;
  * dari tombol-tombol yang ada.
  * 
  * @author Mgs. Muhammad Thoyib Antarnusa
- * @version 2014.12.08
+ * @version 2014.12.10
  *
  */
 public abstract class Listener implements ActionListener
@@ -22,6 +23,7 @@ public abstract class Listener implements ActionListener
 	private static Listener newGame;
 	private static Listener saveGame;
 	private static Listener loadGame;
+	private static Listener quit;
 	private static Listener goToMainMenu;
 	
 	public abstract void actionPerformed(ActionEvent event);
@@ -132,19 +134,55 @@ public abstract class Listener implements ActionListener
 		loadGame = new LoadGameListener();
 	}
 	
-	/**
-	 * 
-	 */
+	/*******************************************
+	 * Membuat listener untuk keluar dari game.
+	 *******************************************/
+	public static void createQuitListener()
+	{
+		/**
+		 * Kelas yang mengextends Listener sebagai listener
+		 * untuk keluar dari permainan.
+		 * 
+		 * @author Mgs. Muhammad Thoyib Antarnusa
+		 * @version 2014.12.08
+		 *
+		 */
+		class QuitListener extends Listener {
+			
+			/***************************************
+			 * Implementasi method actionPerformed.
+			 * 
+			 * @param event ActionEvent.
+			 ***************************************/
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				Main.window.dispatchEvent(new WindowEvent(Main.window, WindowEvent.WINDOW_CLOSING));
+			}	
+		}
+		
+		quit = new QuitListener();
+	}
+	
+	/****************************************
+	 * Membuat listener untuk ke menu utama.
+	 ****************************************/
 	public static void createMainMenuListener()
 	{
 		/**
+		 * Kelas yang mengextends Listener sebagai
+		 * listener untuk ke menu utama.
 		 * 
-		 * @author Thoyib
+		 * @author Mgs. Muhammad Thoyib Antarnusa
 		 * @version 2014.12.08
 		 * 
 		 */
 		class mainMenuListener extends Listener
 		{
+			/***************************************
+			 * Implementasi method actionPerformed.
+			 * 
+			 * @param event ActionEvent.
+			 ***************************************/
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
@@ -182,6 +220,15 @@ public abstract class Listener implements ActionListener
 		return loadGame;
 	}
 	
+	/************************************
+	 * Mengembalikan listener quit game.
+	 * 
+	 * @return Listener quit game.
+	 ************************************/
+	public static Listener getQuit() {
+		return quit;
+	}
+	
 	/****************************************************
 	 * Mengembalikan listener keluar permainan saat ini.
 	 * 
@@ -191,17 +238,13 @@ public abstract class Listener implements ActionListener
 		return goToMainMenu;
 	}
 
-//	public GameData getData() {
-//		return data;
-//	}
-
 	/**************************************
 	 * Mengeset listener save game.
 	 * 
 	 * @param saveGame Listener save game.
 	 **************************************/
 	public static void setSaveGame(Listener saveGame) {
-		saveGame = saveGame;
+		Listener.saveGame = saveGame;
 	}
 
 	/**************************************
@@ -210,11 +253,7 @@ public abstract class Listener implements ActionListener
 	 * @param loadGame Listener load game.
 	 **************************************/
 	public static void setLoadGame(Listener loadGame) {
-		loadGame = loadGame;
+		Listener.loadGame = loadGame;
 	}
-
-//	public void setData(GameData data) {
-//		this.data = data;
-//	}
 	
 }

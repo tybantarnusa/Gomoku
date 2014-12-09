@@ -89,9 +89,11 @@ class NavigationButtons extends JPanel {
 		
 		Listener.createNewGameListener();
 		Listener.createLoadGameListener();
+		Listener.createQuitListener();
 	
 		newGame.addActionListener(Listener.getNewGame());
 		loadGame.addActionListener(Listener.getLoadGame());
+		exitGame.addActionListener(Listener.getQuit());
 		/******************************************************/
 		
 		add(newGame);
