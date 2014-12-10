@@ -77,6 +77,9 @@ class NavigationButtons extends JPanel {
 	private JButton loadGame;
 	private JButton exitGame;
 	
+	/***************
+	 * Constructor.
+	 ***************/
 	public NavigationButtons()
 	{
 		super();
@@ -87,13 +90,13 @@ class NavigationButtons extends JPanel {
 		loadGame = new JButton("LOAD GAME");
 		exitGame = new JButton("EXIT");
 		
-		Listener.createNewGameListener();
+		Listener.createPraNewGameListener();
 		Listener.createLoadGameListener();
 		Listener.createQuitListener();
 	
-		newGame.addActionListener(Listener.getNewGame());
-		loadGame.addActionListener(Listener.getLoadGame());
-		exitGame.addActionListener(Listener.getQuit());
+		newGame.addActionListener(Listener.praNewGame);
+		loadGame.addActionListener(Listener.loadGame);
+		exitGame.addActionListener(Listener.quit);
 		/******************************************************/
 		
 		add(newGame);

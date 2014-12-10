@@ -8,11 +8,13 @@ import javax.swing.JTextArea;
 /**
  * Jendela riwayat pemain menaruh batu.
  * 
- * @author Thoyib
- * @version 
+ * @author Mgs. Muhammad Thoyib Antarnusa
+ * @version 2014.12.10
  *
  */
 public class History extends JFrame {
+	private static final long serialVersionUID = 1546809816171027037L;
+	
 	JTextArea texts;
 	
 	/***************
@@ -35,11 +37,20 @@ public class History extends JFrame {
 		this.add(pane);
 	}
 	
+	/***************************************************
+	 * Menambahkan langkah yang dilakukan pada riwayat.
+	 * 
+	 * @param player Pemain yang melakukan langkah.
+	 * @param koordinat Menaruh pada koordinat sekian.
+	 ***************************************************/
 	public void add(Player player, String koordinat)
 	{
 		texts.append(player.getNama() + " meletakkan pada (" + koordinat + ")\n");
 	}
 	
+	/*******************************************
+	 * Menghapus keseluruhan riwayat permainan.
+	 *******************************************/
 	public void clear()
 	{
 		texts.setText("");

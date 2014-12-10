@@ -8,7 +8,6 @@ import java.io.Serializable;
  * @version 2014.12.08
  *
  */
-
 public class Player implements Serializable
 {
 	private static final long serialVersionUID = 944226352762037188L;
@@ -103,6 +102,9 @@ public class Player implements Serializable
 		this.lambang = "" + lambang;
 	}
 	
+	/*******************
+	 * Method toString.
+	 *******************/
 	public String toString()
 	{
 		return "" + lambang;

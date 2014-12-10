@@ -204,12 +204,13 @@ class BoardGUI extends JPanel {
 					
 					final String KOORDINAT = (grid.X+1) + "," + (grid.Y+1);
 					Main.data.getBoard().putPlayer(Main.data.getCurrentPlayer(), KOORDINAT);
+					Main.history.add(Main.data.getCurrentPlayer(), KOORDINAT);
 					Main.data.getBoard().cetak();	// DEBUG
 					
 					grid.revalidate();
 					
 					if (Engine.checkWin(Main.data.getBoard(), Main.data.getCurrentPlayer())) {
-						JOptionPane.showMessageDialog(null, "Selamat! " + Main.data.getCurrentPlayer().getNama() + " menang dalam " + Main.data.getTurns() + " giliran!", "SELAMAT!", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Selamat!\n" + Main.data.getCurrentPlayer().getNama() + " menang dalam " + Main.data.getTurns() + " giliran!", "SELAMAT!", JOptionPane.INFORMATION_MESSAGE);
 						Main.window.toMainMenu();
 					}
 					
@@ -312,7 +313,9 @@ class GameMenu extends JPanel
 		JButton showHistory = new JButton("HISTORY");
 		
 		Listener.createSaveGameListener();
-		saveGame.addActionListener(Listener.getSaveGame());
+		Listener.createHistoryListener();
+		saveGame.addActionListener(Listener.saveGame);
+		showHistory.addActionListener(Listener.showHistory);
 		
 		features.add(saveGame);
 		features.add(showHistory);
@@ -323,8 +326,8 @@ class GameMenu extends JPanel
 	 ****************************************/
 	private void makeExitGame()
 	{
-		exitGame = new JButton("TO MAIN MENU");
+		exitGame = new JButton("MAIN MENU");
 		Listener.createMainMenuListener();
-		exitGame.addActionListener(Listener.getMainMenuListener());
+		exitGame.addActionListener(Listener.goToMainMenu);
 	}
 }

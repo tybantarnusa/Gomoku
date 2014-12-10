@@ -20,18 +20,52 @@ import javax.swing.JOptionPane;
  */
 public abstract class Listener implements ActionListener
 {
-	private static Listener newGame;
-	private static Listener saveGame;
-	private static Listener loadGame;
-	private static Listener quit;
-	private static Listener goToMainMenu;
+	public static Listener newGame;
+	public static Listener praNewGame;
+	public static Listener saveGame;
+	public static Listener loadGame;
+	public static Listener quit;
+	public static Listener goToMainMenu;
+	public static Listener showHistory;
 	
 	public abstract void actionPerformed(ActionEvent event);
 	
+	/**********************************************
+	 * Membuat listener untuk menampilkan tampilan
+	 * memberikan nama pada pemain.
+	 **********************************************/
+	public static void createPraNewGameListener()
+	{
+		/**
+		 * Kelas yang mengextends Listener sebagai listener
+		 * untuk melakukan permainan baru (memberi nama pemain).
+		 * 
+		 * @author Mgs. Muhammad Thoyib Antarnusa
+		 * @version 2014.12.08
+		 * 
+		 */
+		class NewGameListener extends Listener
+		{
+			
+			/*****************************************************************
+			 * Implementasi method actionPerformed untuk memberi nama pemain.
+			 *****************************************************************/
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				Main.window.toCustomize();
+			}
+			
+		}
+		
+		praNewGame = new NewGameListener();
+	}
+	
+	/*********************************************
+	 * Membuat listener untuk melakukan new game.
+	 *********************************************/
 	public static void createNewGameListener()
 	{
-		Main.data = new GameData(new Board(19), new Player("Hitam", Color.BLACK), new Player("Putih", Color.WHITE), 1);
-		
 		/**
 		 * Kelas yang mengextends Listener sebagai listener
 		 * untuk melakukan permainan baru.
@@ -49,6 +83,24 @@ public abstract class Listener implements ActionListener
 			@Override
 			public void actionPerformed(ActionEvent event)
 			{
+				String p1name;
+				String p2name;
+				
+				/*********** Mengassign nama pemain. *************/
+				if (Customization.player1.getText().equals("")) {
+					p1name = "Hitam";	// Nama default.
+				} else {
+					p1name = Customization.player1.getText();
+				}
+				
+				if (Customization.player2.getText().equals("")) {
+					p2name = "Putih";	// Nama default.
+				} else {
+					p2name = Customization.player2.getText();
+				}
+				/*************************************************/
+				
+				Main.data = new GameData(new Board(19), new Player(p1name, Color.BLACK), new Player(p2name, Color.WHITE), 1);	// Membuat data baru.
 				Main.window.toGamePanel();
 			}
 			
@@ -176,7 +228,7 @@ public abstract class Listener implements ActionListener
 		 * @version 2014.12.08
 		 * 
 		 */
-		class mainMenuListener extends Listener
+		class MainMenuListener extends Listener
 		{
 			/***************************************
 			 * Implementasi method actionPerformed.
@@ -190,70 +242,37 @@ public abstract class Listener implements ActionListener
 			}
 		}
 		
-		goToMainMenu = new mainMenuListener();
+		goToMainMenu = new MainMenuListener();
 	}
+	
+	/*************************************************
+	 * Membuat listener untuk ke memunculkan history.
+	 *************************************************/
+	public static void createHistoryListener()
+	{
+		/**
+		 * Kelas yang mengextends Listener sebagai
+		 * listener untuk memunculkan frame history.
+		 * 
+		 * @author Mgs. Muhammad Thoyib Antarnusa
+		 * @version 2014.12.10
+		 * 
+		 */
+		class HistoryListener extends Listener
+		{
+			/***************************************
+			 * Implementasi method actionPerformed.
+			 * 
+			 * @param event ActionEvent.
+			 ***************************************/
+			@Override
+			public void actionPerformed(ActionEvent event)
+			{
+				Main.history.setVisible(true);
+			}
+		}
 		
-	/************************************
-	 * Mengembalikan listener new game.
-	 * 
-	 * @return Listener new game.
-	 ************************************/
-	public static Listener getNewGame() {
-		return newGame;
-	}
-
-	/************************************
-	 * Mengembalikan listener save game.
-	 * 
-	 * @return Listener save game.
-	 ************************************/
-	public static Listener getSaveGame() {
-		return saveGame;
-	}
-
-	/************************************
-	 * Mengembalikan listener load game.
-	 * 
-	 * @return Listener load game.
-	 ************************************/
-	public static Listener getLoadGame() {
-		return loadGame;
-	}
-	
-	/************************************
-	 * Mengembalikan listener quit game.
-	 * 
-	 * @return Listener quit game.
-	 ************************************/
-	public static Listener getQuit() {
-		return quit;
-	}
-	
-	/****************************************************
-	 * Mengembalikan listener keluar permainan saat ini.
-	 * 
-	 * @return Listener kembali ke menu utama.
-	 ****************************************************/
-	public static Listener getMainMenuListener() {
-		return goToMainMenu;
-	}
-
-	/**************************************
-	 * Mengeset listener save game.
-	 * 
-	 * @param saveGame Listener save game.
-	 **************************************/
-	public static void setSaveGame(Listener saveGame) {
-		Listener.saveGame = saveGame;
-	}
-
-	/**************************************
-	 * Mengeset listener load game.
-	 * 
-	 * @param loadGame Listener load game.
-	 **************************************/
-	public static void setLoadGame(Listener loadGame) {
-		Listener.loadGame = loadGame;
+		showHistory = new HistoryListener();
 	}
 	
 }

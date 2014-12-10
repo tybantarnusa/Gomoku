@@ -29,6 +29,18 @@ public class Window extends JFrame {
 		shownPanel = new MainMenu();
 		add(shownPanel);
 	}
+	
+	/*********************************************
+	 * Untuk menuju panel customization.
+	 *********************************************/
+	public void toCustomize()
+	{
+		shownPanel.setVisible(false);
+		remove(shownPanel);
+		shownPanel = new Customization();
+		add(shownPanel);
+		shownPanel.setVisible(true);
+	}
 
 	/*********************************************
 	 * Untuk menuju panel permainan sesungguhnya.
@@ -37,6 +49,7 @@ public class Window extends JFrame {
 	{
 		shownPanel.setVisible(false);
 		remove(shownPanel);
+		Main.history.clear();
 		shownPanel = new GamePanel();
 		add(shownPanel);
 		shownPanel.setVisible(true);
@@ -49,6 +62,7 @@ public class Window extends JFrame {
 	{
 		shownPanel.setVisible(false);
 		remove(shownPanel);
+		Main.history.clear();
 		shownPanel = new MainMenu();
 		add(shownPanel);
 		shownPanel.setVisible(true);
