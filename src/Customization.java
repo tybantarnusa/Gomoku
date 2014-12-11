@@ -55,8 +55,8 @@ public class Customization extends JPanel {
 		Listener.createNewGameListener();
 		start.addActionListener(Listener.newGame);
 		JButton mainMenu = new JButton("MAIN MENU");
-		Listener.createMainMenuListener();;
-		start.addActionListener(Listener.goToMainMenu);
+		Listener.createMainMenuListener();
+		mainMenu.addActionListener(Listener.goToMainMenu);
 		
 		buttons.add(start);
 		buttons.add(mainMenu);

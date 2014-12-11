@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -175,8 +176,10 @@ public abstract class Listener implements ActionListener
 					Main.data = (GameData) load.readObject();
 					load.close();
 					Main.window.toGamePanel();
+				} catch (FileNotFoundException FNFEx) {
+					JOptionPane.showMessageDialog(null, "Tidak ada save file!", "Loading...", JOptionPane.ERROR_MESSAGE);
 				} catch (IOException IOex) {
-					JOptionPane.showMessageDialog(null, "Load gagal!", "Loading...", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Save file corrupted!", "Loading...", JOptionPane.ERROR_MESSAGE);
 				} catch (ClassNotFoundException CNFex) {
 					JOptionPane.showMessageDialog(null, "Load gagal!", "Loading...", JOptionPane.ERROR_MESSAGE);
 				}
