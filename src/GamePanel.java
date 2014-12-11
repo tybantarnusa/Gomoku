@@ -295,7 +295,7 @@ class GameMenu extends JPanel
 	public GameMenu()
 	{
 		super(new BorderLayout());	
-		features = new JPanel(new GridLayout(1,2));
+		features = new JPanel(new GridLayout(1,3));
 		
 		makeFeatureButtons();
 		makeExitGame();
@@ -311,14 +311,17 @@ class GameMenu extends JPanel
 	{
 		JButton saveGame = new JButton("SAVE GAME");
 		JButton showHistory = new JButton("HISTORY");
+		JButton restart = new JButton("RESTART");
 		
 		Listener.createSaveGameListener();
 		Listener.createHistoryListener();
 		saveGame.addActionListener(Listener.saveGame);
 		showHistory.addActionListener(Listener.showHistory);
+		restart.addActionListener(Listener.newGame);
 		
 		features.add(saveGame);
 		features.add(showHistory);
+		features.add(restart);
 	}
 	
 	/****************************************
