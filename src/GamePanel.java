@@ -164,6 +164,7 @@ class BoardGUI extends JPanel {
 				g2.setPaint(grid.getPlayer().getColor());
 				
 				double DIAMETER = grid.getWidth()/2+4;
+
 				g2.fill(new Ellipse2D.Double(1.5,0,DIAMETER,DIAMETER));
 			}
 		}
@@ -229,7 +230,7 @@ class BoardGUI extends JPanel {
 			
 		}
 		
-		/********** MEMBUAT PETAK-PETAK PAPAN **********/
+		/***************** MEMBUAT PETAK-PETAK PAPAN ******************/
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				Grid grid = new Grid(i, j);
@@ -252,7 +253,7 @@ class BoardGUI extends JPanel {
 				add(grid);
 			}
 		}
-		/************************************************/
+		/*************************************************************/
 	}
 
 	/*********************************
@@ -313,11 +314,16 @@ class GameMenu extends JPanel
 		JButton showHistory = new JButton("HISTORY");
 		JButton restart = new JButton("RESTART");
 		
+		/********* MEMBUAT DAN MENAMBAHKAN LISTENER ********/
 		Listener.createSaveGameListener();
 		Listener.createHistoryListener();
+		Listener.createPraNewGameListener();
+		Listener.createNewGameListener();
+		
 		saveGame.addActionListener(Listener.saveGame);
 		showHistory.addActionListener(Listener.showHistory);
 		restart.addActionListener(Listener.newGame);
+		/****************************************************/
 		
 		features.add(saveGame);
 		features.add(showHistory);

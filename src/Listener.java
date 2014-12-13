@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -72,6 +73,7 @@ public abstract class Listener implements ActionListener
 		 * untuk melakukan permainan baru.
 		 * 
 		 * @author Mgs. Muhammad Thoyib Antarnusa
+		 * 		   Beta Tester: Dwiki Setya M.
 		 * @version 2014.12.08
 		 * 
 		 */
@@ -87,19 +89,24 @@ public abstract class Listener implements ActionListener
 				String p1name;
 				String p2name;
 				
-				/*********** Mengassign nama pemain. *************/
-				if (Customization.player1.getText().equals("")) {
-					p1name = "Hitam";	// Nama default.
-				} else {
-					p1name = Customization.player1.getText();
+				try {
+					/*********** Mengassign nama pemain. *************/
+					if (Customization.player1.getText().equals("")) {
+						p1name = "Hitam";	// Nama default.
+					} else {
+						p1name = Customization.player1.getText();
+					}
+					
+					if (Customization.player2.getText().equals("")) {
+						p2name = "Putih";	// Nama default.
+					} else {
+						p2name = Customization.player2.getText();
+					}
+					/*************************************************/
+				} catch (NullPointerException NPEx) {
+					p1name = Main.data.getPlayer1().getNama();
+					p2name = Main.data.getPlayer2().getNama();
 				}
-				
-				if (Customization.player2.getText().equals("")) {
-					p2name = "Putih";	// Nama default.
-				} else {
-					p2name = Customization.player2.getText();
-				}
-				/*************************************************/
 				
 				Main.data = new GameData(new Board(19), new Player(p1name, Color.BLACK), new Player(p2name, Color.WHITE), 1);	// Membuat data baru.
 				Main.window.toGamePanel();
@@ -112,8 +119,6 @@ public abstract class Listener implements ActionListener
 	
 	/*****************************************
 	 * Membuat listener untuk mengesave game.
-	 * 
-	 * @param data Data yang akan disave.
 	 *****************************************/
 	public static void createSaveGameListener()
 	{
@@ -135,7 +140,14 @@ public abstract class Listener implements ActionListener
 			public void actionPerformed(ActionEvent event)
 			{
 				try {
-					ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream("memory.sav"));
+					
+					File file = new File("memory.sav");
+					if (file.exists()) {
+						int choice = JOptionPane.showConfirmDialog(null, "Sudah ada file yang tersimpan. Overwrite?", "Saving...", JOptionPane.YES_OPTION);
+						if (choice == 1) return;
+					}
+					
+					ObjectOutputStream save = new ObjectOutputStream(new FileOutputStream(file));
 					save.writeObject(Main.data);
 					save.close();
 					JOptionPane.showMessageDialog(null, "Berhasil di-save!", "Saving...", JOptionPane.PLAIN_MESSAGE);
